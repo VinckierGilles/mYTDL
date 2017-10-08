@@ -2,7 +2,7 @@
 A minimalistic YouTube Video downloader powered by nodeJS. 
 
 ## Download
-A compiled portable .exe can be found [here](https://www.google.com).
+A compiled portable .exe can be found [here](https://github.com/dasGoogle/mYTDL/releases/latest).
 
 ## FAQ
 1. Why can't I download videos in higher resolution than 720p? 
