@@ -1,0 +1,23 @@
+{
+  "name": "mytdl",
+  "version": "1.0.0",
+  "description": "A minimalistic YouTube Video downloader",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "",
+  "keywords": [
+    "YouTube",
+    "Download"
+  ],
+  "author": "dasGoogle",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "~1.7.8"
+  },
+  "dependencies": {
+    "sanitize-filename": "^1.6.1",
+    "ytdl-core": "^0.17.1"
+  }
+}

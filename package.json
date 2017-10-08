@@ -1,0 +1,19 @@
+{
+
+    "devDependencies": {
+        "electron-builder": "~5.12.X",
+        "electron-prebuilt": "~1.2.X"
+    },
+
+      "build": {
+        "appId": "dasgoogle.mytdl.app",
+        "mac": {
+          "category": "public.app-category.video"
+        }
+    },
+    "scripts": {
+      "postinstall": "install-app-deps",
+      "start": "electron ./app --enable-logging",
+      "dist-win": "npx electron-builder -w portable --ia32"
+    }
+}

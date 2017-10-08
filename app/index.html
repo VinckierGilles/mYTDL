@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>mYTDL</title>
+</head>
+<body>
+<style>
+:not(input):not(textarea),
+:not(input):not(textarea)::after,
+:not(input):not(textarea)::before {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+input, button, textarea, :focus {
+  outline: none; // You should add some other style for :focus to help UX/a11y
+}
+</style>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<nav style="-webkit-app-region: drag">
+  <div class="nav-wrapper red">
+    <div class="brand-logo center">mYTDL</div>
+    <ul class="right" style="-webkit-app-region: no-drag">
+      <li><a class="tooltipped modal-trigger" href="#modal1" data-position="bottom" data-delay="50" data-tooltip="info"><i class="material-icons">info</i></a></li>
+      <li><a id="min-btn" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="minimize"><i class="material-icons">expand_more</i></a></li>
+      <li><a id="close-btn" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="close"><i class="material-icons">close</i></a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <div id="form">
+    <div style="height: 20px">
+    </div>
+    <form>
+      <label for="url">Stored in /Desktop</label>
+      <input type="text" id="url" placeholder="Youtube-URL">
+      <div class="waves-effect waves-light btn red" id="dlbutton" onclick="downloadvid(document.getElementById('url').value)">Download</div>
+    </form>
+  </div>
+  <div id="progressbar">
+    <div class="card horizontal">
+      <div class="card-image">
+        <img id="vid_img" src="">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <h5 style="text-overflow: ellipsis" class="truncate" id="vid_title"></h5>
+          <div id="vid_author">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="progress red lighten-4">
+      <div id ="bar" class="determinate red" style="width: 0%"></div>
+    </div>
+    <label id="barlabel" for="bar">0/100%</label>
+  </div>
+
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>mYTDL</h4>
+      <span>v1.0.0</span>
+      <a href="https://github.com/dasGoogle/mYTDL" target="blank">GitHub</a>
+      <p>
+        A minimalistic YouTube Video downloader. Written by <a href="https://github.com/dasGoogle" target="blank">@dasGoogle</a> in 2017. <br />
+        Given the Video URL, mYTDL downloads a .mp4 file with the highest resolution (up to 720p) to your desktop.
+      </p>
+      <h5>Open Source Licenses</h5>
+      <ul class="collapsible" data-collapsible="accordion">
+        <li>
+          <div class="collapsible-header">ytdl-core</div>
+          <div class="collapsible-body">
+            <a href="https://github.com/fent/node-ytdl-core" target="blank">GitHub</a>
+            <p>
+              Copyright (c) 2012 by Roly Fentanes <br /><br />
+              Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+              <br />
+              <br />
+              The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+              <br />
+              <br />
+              THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">MaterializeCSS</div>
+          <div class="collapsible-body">
+            <a href="https://github.com/Dogfalo/materialize" target="blank">GitHub</a>
+            <p>
+              Copyright (c) 2014-2017 Materialize <br /><br />
+              Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+              <br />
+              <br />
+              The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+              <br />
+              <br />
+              THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">jQuery</div>
+          <div class="collapsible-body">
+            <a href="https://github.com/jquery/jquery" target="blank">GitHub</a>
+            <p>
+              Copyright JS Foundation and other contributors, https://js.foundation/
+              <br />
+              This software consists of voluntary contributions made by many
+              individuals. For exact contribution history, see the revision history
+              available at https://github.com/jquery/jquery
+              <br />
+              The following license applies to all parts of this software except as
+              documented below:
+              <br />
+              ====
+              <br />
+              Permission is hereby granted, free of charge, to any person obtaining
+              a copy of this software and associated documentation files (the
+              "Software"), to deal in the Software without restriction, including
+              without limitation the rights to use, copy, modify, merge, publish,
+              distribute, sublicense, and/or sell copies of the Software, and to
+              permit persons to whom the Software is furnished to do so, subject to
+              the following conditions:
+              <br />
+              The above copyright notice and this permission notice shall be
+              included in all copies or substantial portions of the Software.
+              <br />
+              THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+              EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+              MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+              NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+              LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+              OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+              WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+              <br />
+              ====
+              <br />
+              All files located in the node_modules and external directories are
+              externally maintained libraries used by this software which have their
+              own licenses; we recommend you read them, as their terms may differ from
+              the terms above.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">electron</div>
+          <div class="collapsible-body">
+            <a href="https://github.com/electron/electron" target="blank">GitHub</a>
+            <p>
+              Copyright (c) 2013-2017 GitHub Inc. <br /><br />
+              Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+              <br />
+              <br />
+              The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+              <br />
+              <br />
+              THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">sanitize-filename</div>
+          <div class="collapsible-body">
+            <a href="https://github.com/parshap/node-sanitize-filename" target="blank">GitHub</a>
+            <p>
+              ISC License: <br />
+              Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC") <br />
+              Copyright (c) 1995-2003 by Internet Software Consortium
+              <br /><br />
+              Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+              <br /><br />
+              THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+  <script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script>
+  const dir = require('os').homedir() + '/Desktop';
+  $('#progressbar').hide();
+  // You can also require other files to run in this process
+  const fs = require('fs');
+  const ytdl = require('ytdl-core');
+  var sanitize = require("sanitize-filename");
+  function downloadvid(url){
+    Materialize.toast('getting video metadata', 3000)
+    $('#form').hide();
+    ytdl.getInfo(url, function(err, info){
+      if (err){
+        $('#progressbar').hide();
+        $('#form').show();
+        $('#bar').css('width', 0+'%');
+        Materialize.toast(err, 3000);
+      } else {
+        console.log(info)
+        $("#vid_img").attr("src",info['thumbnail_url']);
+        $("#vid_title").html(info.title)
+        $("#vid_author").html(info.author.name)
+        Materialize.toast('Started Download', 3000)
+
+        $('#progressbar').show();
+        var downloader = ytdl(url);
+        downloader.pipe(fs.createWriteStream(dir+ '/' + sanitize(info.title + " - " + info.author.name)+".mp4"));
+        downloader.on('progress', function(chunklength, downloaded, total){
+          var percentDone = downloaded / total * 100;
+          $('#bar').css('width', percentDone+'%');
+          $('#barlabel').html(Math.round(percentDone)+'/100%')
+        });
+        downloader.on('end', function(){
+          Materialize.toast('Finished downloading.', 5000)
+          $('#progressbar').hide();
+          $('#form').show();
+          $('#url').val("")
+          $('#bar').css('width', 0+'%');
+        });
+      }
+    });
+
+  }
+
+  const remote = require('electron').remote;
+  $('#min-btn').on("click", function (e) {
+    var window = remote.getCurrentWindow();
+    window.minimize();
+  });
+
+  $('#close-btn').on("click", function (e) {
+    var window = remote.getCurrentWindow();
+    window.close();
+  });
+  $(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50});
+    $('.modal').modal();
+  });
+
+  </script>
+</div>
+</body>
+</html>
