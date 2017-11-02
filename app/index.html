@@ -34,9 +34,20 @@ input, button, textarea, :focus {
     <div style="height: 20px">
     </div>
     <form>
-      <label for="url">Stored in /Desktop</label>
-      <input type="text" id="url" placeholder="Youtube-URL">
-      <div class="waves-effect waves-light btn red" id="dlbutton" onclick="downloadvid(document.getElementById('url').value)">Download</div>
+<label for="url">Stored in /Desktop</label>
+      <div class="row">
+
+            <input type="text" class="col s9" id="url" placeholder="Youtube-URL">
+
+              <select class="col s3" id="formatsel">
+                <option value="v" selected>Video (.mp4)</option>
+                <option value="a">Audio only</option>
+              </select>
+
+
+
+        </div>
+        <div class="waves-effect waves-light btn red" id="dlbutton" onclick="downloadvid(document.getElementById('url').value)">Download</div>
     </form>
   </div>
   <div id="progressbar">
@@ -45,8 +56,10 @@ input, button, textarea, :focus {
         <img id="vid_img" src="">
       </div>
       <div class="card-stacked">
-        <div class="card-content">
-          <h5 style="text-overflow: ellipsis" class="truncate" id="vid_title"></h5>
+        <div class="card-content" style="overflow: hidden">
+          <b>
+          <p style="text-overflow: clip; " class="truncate" id="vid_title"></p>
+          </b>
           <div id="vid_author">
           </div>
         </div>
@@ -189,6 +202,7 @@ input, button, textarea, :focus {
   <script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   <script>
+  $('select').material_select();
   const dir = require('os').homedir() + '/Desktop';
   $('#progressbar').hide();
   // You can also require other files to run in this process
@@ -212,7 +226,16 @@ input, button, textarea, :focus {
         Materialize.toast('Started Download', 3000)
 
         $('#progressbar').show();
-        var downloader = ytdl(url);
+        //add audio download
+        var downloader;
+
+        if ($('#formatsel').val() === 'a'){
+          downloader = ytdl(url, { filter: function(format) {return format.resolution === null && format.audioEncoding != 'opus'; } });
+
+        } else {
+          downloader = ytdl(url, {});
+        }
+
         downloader.pipe(fs.createWriteStream(dir+ '/' + sanitize(info.title + " - " + info.author.name)+".mp4"));
         downloader.on('progress', function(chunklength, downloaded, total){
           var percentDone = downloaded / total * 100;
@@ -244,6 +267,7 @@ input, button, textarea, :focus {
   $(document).ready(function(){
     $('.tooltipped').tooltip({delay: 50});
     $('.modal').modal();
+
   });
 
   </script>
